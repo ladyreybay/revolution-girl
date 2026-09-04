@@ -1,9 +1,9 @@
-function PasswordComp(){
+function PasswordComp({changeId}){
     return(
         <div>
-            <label htmlFor="userPass">Password</label><span>*</span>
+            <label htmlFor={changeId}>Password</label><span>*</span>
             <br/>
-            <input type="password" name="userPass" id="userPass" placeholder="Enter account's password" required/>
+            <input type="password" name="userPass" id={changeId} placeholder="Enter account's password" required/>
         </div>
     );
 }

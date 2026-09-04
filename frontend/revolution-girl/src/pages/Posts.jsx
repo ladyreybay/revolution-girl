@@ -1,8 +1,15 @@
+import SearchBar from "../components/Searchbar";
+import Feed from "../components/Feed";
+import { useState } from "react";
+
 function Posts(){
+    const [feedOpt, setFeedOpt] = useState("regular");
     return(
         <div>
-            <h1>Posts</h1>
-            <p>JDASKDOSAKPODKASDSPOkODKASPOKDSAKDASKPO</p>
+            <div>
+                <SearchBar/>
+            </div>
+            <Feed/>
         </div>
     );
 }

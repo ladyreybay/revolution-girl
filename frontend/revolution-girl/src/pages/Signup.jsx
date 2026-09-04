@@ -1,12 +1,13 @@
-import { Link } from "react-router-dom";
 import UsernameComp from "../components/UsernameComp";
 import PasswordComp from "../components/PasswordComp";
+import PronounsComp from "../components/PronounsComp";
+import { Link } from "react-router-dom";
 
 function Signup(){
     return(
         <div>
             <h1>Signup</h1>
-            <form>
+            <form action="/posts" method="post">
                 <div>
                     <div>
                         <label htmlFor="newUserEmail">Email</label><span>*</span>
@@ -18,14 +19,7 @@ function Signup(){
                 <div>
                     <UsernameComp/>
                     <div>
-                        <label htmlFor="userPronouns">Pronouns</label><span>*</span>
-                        <br/>
-                        <select name="userPronouns" id="userPronouns" required>
-                            <option>she/her</option>
-                            <option>he/him</option>
-                            <option>it/its</option>
-                            <option>they/them</option>
-                        </select>
+                        <PronounsComp/>
                         <br/>
                         <small>If your pronouns are not listed here, please <Link to="/contact">contact us</Link>!</small>
                         {
