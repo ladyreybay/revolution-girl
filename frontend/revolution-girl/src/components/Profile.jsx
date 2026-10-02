@@ -34,7 +34,6 @@ function Profile({name}){
                 <section id="typeSections">
                     <span>Posts </span>
                     <span>Albums </span>
-                    <span>Saved</span>
                 </section>
                 <section id="typeResultSection">
                     <PostPreview postId={username+"/1"}/>

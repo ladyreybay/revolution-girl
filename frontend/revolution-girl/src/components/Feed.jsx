@@ -1,7 +1,7 @@
 import PostPreview from "./PostPreview";
 import { useParams } from "react-router-dom";
 
-function Feed(){
+function Feed({posts}){
     const {username} = useParams();
     return(
         <>
