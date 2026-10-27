@@ -2,12 +2,21 @@ import UsernameComp from "../components/UsernameComp";
 import PasswordComp from "../components/PasswordComp";
 import PronounsComp from "../components/PronounsComp";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function Signup(){
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+
+    async function handleSubmit(e){
+        e.preventDefault();
+    }
+
     return(
         <div>
             <h1>Signup</h1>
-            <form action="/posts" method="post">
+            <form onSubmit={handleSubmit}>
                 <div>
                     <div>
                         <label htmlFor="newUserEmail">Email</label><span>*</span>
@@ -22,23 +31,9 @@ function Signup(){
                         <PronounsComp/>
                         <br/>
                         <small>If your pronouns are not listed here, please <Link to="/contact">contact us</Link>!</small>
-                        {
-                            //<input type="text" name="userPronouns" placeholder="Enter your desired pronouns (i.e. it/its)" required/>
-                        }
-                    </div>
-                    <div>
-                        <label>Country</label>
-                        <select>
-                            <option>South Africa</option>
-                            <option>Scotland</option>
-                            <option>Wales</option>
-                            <option>Norhtern Ireland</option>
-                            <option>England</option>
-                            <option>Ireland</option>
-                        </select>
                     </div>
                 </div>
-                <button>Create Account</button>
+                <button type="submit">Create Account</button>
             </form>
         </div>
     );

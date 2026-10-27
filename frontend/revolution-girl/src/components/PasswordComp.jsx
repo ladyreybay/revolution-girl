@@ -1,9 +1,16 @@
-function PasswordComp({changeId}){
+function PasswordComp({changeId, password, setPassword}){
     return(
         <div>
             <label htmlFor={changeId}>Password</label><span>*</span>
             <br/>
-            <input type="password" name="userPass" id={changeId} placeholder="Enter account's password" required/>
+            <input type="password" 
+                name="userPass" 
+                id={changeId}
+                value={password}
+                onChange={(e)=>setPassword(e.target.value)}
+                placeholder="Enter account's password" 
+                required
+            />
         </div>
     );
 }

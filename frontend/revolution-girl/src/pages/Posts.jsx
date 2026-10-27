@@ -3,33 +3,45 @@ import Feed from "../components/Feed";
 import { useState } from "react";
 import { useEffect } from "react";
 
-function Posts(){
+function Posts({posts, setPosts}){
     const [feedOpt, setFeedOpt] = useState("regular");
-    const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+
+    async function loadPosts(){
+        try{
+            setLoading(true);
+            const res = await fetch("http://localhost:8080/api/posts");
+            if(!res.ok){
+                throw new Error("Unable to load posts");
+            }
+            const dat = await res.json();
+            setPosts(dat);
+            setLoading(false);
+        }catch(err){
+            setErrorMessage(err.message);
+            setLoading(false);
+        }
+    }
+
+    function handleRefresh(){
+        loadPosts();
+    }
+
     useEffect(()=>{
-        setLoading(true);
-        fetch("http://localhost:8080/api/posts")
-            .then(response=>{
-                if(!response.ok){
-                    throw("Critical! Could not load posts");
-                }
-                return response.json();
-            })
-            .then(data=>{setPosts(data)})
-            .catch((error)=>{
-                console.error("Error fetching posts: "+error);
-                setLoading(false);
-            })
-            .finally(()=>{setLoading(false)});
+        loadPosts();
     }, []);
+    useEffect(()=>{
+        console.log("Stuff\n",posts);
+    },[posts]);
+    
     return(
-        <div>
+        <>
             <div>
                 <SearchBar/>
             </div>
-            <Feed posts={posts}/>
-        </div>
+            <Feed posts={posts} feedOpt={feedOpt}/>
+        </>
     );
 }
 

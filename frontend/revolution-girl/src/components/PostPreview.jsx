@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 
-function PostPreview({postId}){
-    const postPath = "/posts/"+postId;
+function PostPreview({postPath, imageSrc, caption}){
+    if(imageSrc.trim()===""||!imageSrc){
+        imageSrc = "/postPlace.png";
+    }
     return(
         <section>
             <Link to={postPath}>
-                <img src="/postPlace.png"/>
+                <img src={imageSrc} alt={caption}/>
             </Link>
         </section>
     );

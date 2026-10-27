@@ -9,12 +9,12 @@ function Navbar(){
     }else{
         return(
             <nav>
-                <Link to="/posts/meowers">
+                <Link to={`/:username/posts`}>
                     <img src="/favicon.svg"/>
                 </Link>
-                <Link to={`/posts/meowers`}>Home</Link>
-                <Link to={`/friends/meowers`}>Friends</Link>
-                <Link to={`/profile/meowers`}>
+                <Link to={`/:username/posts`}>Home</Link>
+                <Link to={`/:username/friends`}>Friends</Link>
+                <Link to={`/:username/profile`}>
                     <img src="/profilePlace.png" id="profileImg"/>
                 </Link>
             </nav>

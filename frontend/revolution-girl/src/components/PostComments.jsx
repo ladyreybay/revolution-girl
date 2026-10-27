@@ -1,12 +1,15 @@
 import ProfilePreview from "./ProfilePreview";
 
-function PostComments(){
+function PostComments({comments}){
     return(
         <>
-            <section>
-                <ProfilePreview/>
-                <p>Wow this is soooo good</p>
-            </section>
+            {comments.map((comment)=>{
+                return <article>
+                    <ProfilePreview/>
+                    <p>{comment.username}</p>
+                    <p>{comment.comment}</p>
+                </article>
+            })}
         </>
     );
 }
