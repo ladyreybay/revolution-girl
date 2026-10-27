@@ -1,0 +1,46 @@
+services:
+  db:
+    image: mongo
+    container_name: revolutionGirl_db
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - revolutionGirl_network
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: revolutionGirl_api
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    env_file: ./backend/.env
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - revolutionGirl_network
+  client:
+    build:
+      context: ./frontend/revolution-girl
+      dockerfile: Dockerfile
+    container_name: revolutionGirl_client
+    ports:
+      - 5173:5173
+    restart: unless-stopped
+    depends_on:
+      - api
+    networks:
+      - revolutionGirl_network
+volumes:
+  mongo_data:
+networks:
+  revolutionGirl_network:
