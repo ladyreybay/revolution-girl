@@ -53,17 +53,6 @@ app.get("/api/posts", async (req, res)=>{
     }
 });
 
-/*app.get("/api/albums", async (req, res)=>{
-    try{
-        const db = getDB();
-        const collection = db.collection("albums");
-        const albums = await collection.find().toArray();
-        res.status(200).json(albums);
-    }catch(err){
-        res.status(500).json({message: "Error occured while retrieving database", error: err.message})
-    }
-});*/
-
 app.post("/login/users", async (req, res)=>{//used to verify if password and usernmae are correct/exist
     try{
         const {username, password} = req.body;
@@ -84,25 +73,6 @@ app.post("/login/users", async (req, res)=>{//used to verify if password and use
     }
 });
 
-/*app.post("/signup/user", async (req, res)=>{
-    try{
-        const {username, password, confirmPassword} = req.body;
-        if(password!==confirmPassword){
-            return res.status.json({message:"Invalid password credentials were given. Please ensure password and confirm password match"});
-        }
-        const db = getDB();
-        const collection = db.collection("users");
-        const checkUser = await collection.findOne({username: username});
-        if(checkUser!=null){
-            return res.status(400).json({message:"Username is already in use. Please choose a different one"});
-        }
-        const writeResult = await collection.insertOne()
-        res.status(200).json({message:"Account has successfully been created! Welcome to the revolution!!!!"});
-    }catch{
-        res.status(500).json({message:"Error occured adding user to db. Please try again", messasge:err.message});
-    }
-});*/
-
 app.post("/api/getPost", async (req, res)=>{//used to get one post for viewing post
     try{
         const {postId} = req.body;
@@ -121,11 +91,9 @@ app.post("/api/getPost", async (req, res)=>{//used to get one post for viewing p
 app.post("/api/getSpecPosts", async (req, res)=>{//used to get all the posts of one person
     try{
         const {userId} = req.body;
-        console.log("Post Account\n",userId, userId.userId);
         const db = getDB();
         const collection = db.collection("posts");
         const posts = await collection.find({posterId: userId}).toArray();
-        console.log("Posts received:\n", posts);
         if(posts===null){
             return res.status(400).json({message:"Invalid userId was provided. Cannot find posts"});
         }
@@ -138,11 +106,9 @@ app.post("/api/getSpecPosts", async (req, res)=>{//used to get all the posts of 
 app.post("/api/getAccount", async (req, res)=>{//used to get account information
     try{
         const {userId} = req.body;
-        console.log("Account\n", userId);
         const db = getDB();
         const collection = db.collection("users");
         const user = await collection.findOne({_id: new ObjectId(userId)});
-        console.log("Received account:\n", user);
         if(user===null||user===undefined){
             return res.status(400).json({message:"Invalid profile id was received. Cannot find user"});
         }
@@ -173,7 +139,7 @@ app.post("/api/user", async (req,res)=>{//basic function of adding new user
             email,//email of the person logging in
             username,
             password,
-            pronouns: [pronouns],//array containing the pronouns of the person being added
+            pronouns: [...pronouns],//array containing the pronouns of the person being added
             friends: [],//array containing the ids to usernames to easily display them
             albums: []//array containing albums for dif posts and dif names for albums
         }
@@ -209,7 +175,6 @@ app.post("/api/posts", uploadImage.single("image"),async (req, res)=>{//basic fu
             const db = getDB();
             const collection = db.collection("posts");
             const result = await collection.insertOne(addPost);
-            console.log(result);
             if(result==null||result==undefined){//check if something funky happened
                 return res.status(500).json({message:"Something went wrong with adding post. Please try again later", error:"Unknown error occured"});
             }
