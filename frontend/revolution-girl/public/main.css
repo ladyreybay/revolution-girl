@@ -7,7 +7,7 @@ html{
     padding: 0px;
 }
 
-a, #profileImg{
+#profileImg{
     max-height: 80px;
 }
 

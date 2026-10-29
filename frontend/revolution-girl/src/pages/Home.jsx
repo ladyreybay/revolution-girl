@@ -1,21 +1,23 @@
 import { Link } from "react-router-dom";
 import PasswordComp from "../components/PasswordComp";
 import UsernameComp from "../components/UsernameComp";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Home({loading, setLoading, errorMessage, setErrorMessage}){
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+function Home({setLogged, loading, setLoading, errorMessage, setErrorMessage}){
+    const [username, setUsername] = useState("meowers");
+    const [password, setPassword] = useState("trustmebro");
+    const navigate = useNavigate();
 
     async function handleSubmit(e){
         e.preventDefault();
-        if(username.trim()==""||password.trim()==""){
-            setUsername("");
-            setPassword("");
-            return;
-        }
-        setLoading(true);
         try{
+            if(username.trim()==""||password.trim()==""){
+                setUsername("");
+                setPassword("");
+                throw new Error("Please enter a username and password. Or signup for free!");
+            }
+            setLoading(true);
             const res = await fetch("http://localhost:8080/login/users", {
                 method: "POST",
                 headers:{
@@ -31,26 +33,20 @@ function Home({loading, setLoading, errorMessage, setErrorMessage}){
             }
             setLoading(false);
             const dat = await res.json();
-            sessionStorage.setItem("user", dat);
-            window.history.pushState(null, "Redirected Page", `/${dat.username}/posts`);
-            window.location.reload();
+            sessionStorage.setItem("user", JSON.stringify(dat));//log person's login to session for more "private" use
+            setLogged(true);
+            navigate("/posts", {replace: true});
         }catch(error){
-            setErrorMessage(error.message);
             setLoading(false);
+            setErrorMessage(error.message);
         }
     }
 
-    useEffect(()=>{
-        if(sessionStorage.getItem("user")){
-            sessionStorage.removeItem("user");
-        }
-    }, []);
-
     return(
-        <div>
-            <h1 id="homeTitle">Revolution Girl!</h1>
-            <h2 id="homeSub">Punk ain&apos;t dead, it is community</h2>
-            <form onSubmit={handleSubmit} id="homeLogin">
+        <div className="flex flex-col items-center bg-emerald-300">
+            <h1 id="homeTitle" className="text-9xl">Revolution Girl!</h1>
+            <h2 id="homeSub" className="text-4xl">Punk ain&apos;t dead, it is community</h2>
+            <form onSubmit={handleSubmit} id="homeLogin" className="">
                 <UsernameComp changeId="loginUsername" username={username} setUsername={setUsername} />
                 <br/>
                 <PasswordComp changeId="loginPassword" password={password} setPassword={setPassword} />
@@ -58,10 +54,10 @@ function Home({loading, setLoading, errorMessage, setErrorMessage}){
                 <div>
                     {errorMessage&&<span id="errorField">{errorMessage}</span>}
                 </div>
-                <div>
-                    <button type="submit" id="loginBut">Login</button>
+                <div className="flex flex-row place-items-center">
+                    <button type="submit" id="loginBut" className="hover:cursor-pointer border-2 border-black rounded-sm">Login</button>
                     <Link to="/signup">
-                        <button id="signup">Signup</button>
+                        <button id="signup" className="hover:cursor-pointer border-2 border-black rounded-sm ">Signup</button>
                     </Link>
                 </div>
             </form>

@@ -7,13 +7,14 @@ import ContactUs from "./pages/ContactUs";
 import Friends from "./pages/Friends"
 import Navbar from "./components/Navbar";
 import Post from "./components/Post";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import "/public/main.css";
 import { useEffect, useState } from "react";
 
 function App(){
   const [users, setUsers] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [logged, setLogged] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -70,16 +71,14 @@ function App(){
   return(
     <BrowserRouter>
       <Navbar/>
-      <main>
+      <main className="max-h-full">
         <Routes>
-          <Route path="/" element={<Home loading={loading} setLoading={setLoading} errorMessage={errorMessage} setErrorMessage={setErrorMessage} />}/>
-          <Route path="/signup" element={<Signup/>}/>
-          {/*<Route path="/posts" element={<Posts/>}/>*/}
-          <Route path="/:username/posts" element={<Posts posts={posts} setPosts={setPosts}/>}/>
-          <Route path="/:username/posts/:postId" element={<Post posts={posts}/>}/>
-          <Route path="/:username/profile" element={<Account/>}/>
-          <Route path="/:username/profile/:userId" element={<Account/>}/>
-          <Route path="/:username/friends" element={<Friends/>}/>
+          <Route path="/" element={<Home setLogged={setLogged} loading={loading} setLoading={setLoading} errorMessage={errorMessage} setErrorMessage={setErrorMessage} />}/>
+          <Route path="/signup" element={<Signup setLogged={setLogged}/>}/>
+          <Route path="/posts" element={logged?<Posts posts={posts} setPosts={setPosts}/>:<Navigate to="/" replace/>}/>
+          <Route path="/posts/:postId" element={logged?<Post posts={posts}/>:<Navigate to="/" replace/>}/>
+          <Route path="/profile/:userId" element={logged?<Account posts={posts} setPosts={setPosts}/>:<Navigate to="/" replace/>}/>
+          <Route path="/friends/:userId" element={logged?<Friends/>:<Navigate to="/" replace/>}/>
           <Route path="/contact" element={<ContactUs/>}/>
           <Route path="*" element={<NotFound/>}/>
         </Routes>
