@@ -7,6 +7,7 @@ function PostAdd({toggleAdd, posts, setPosts}){
     const [preUrl, setPreUrl] = useState(null);
     const [caption, setCaption] = useState("");
     const user = JSON.parse(sessionStorage.getItem("user"));
+    const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(()=>{
         if(!image){
@@ -51,12 +52,8 @@ function PostAdd({toggleAdd, posts, setPosts}){
             const dat = await res.json();
             setPosts((prev)=>[dat, ...prev]);
         }catch(err){
-            console.log(err.message);
+            setErrorMessage(err.message)
         }
-        setImage(null);
-        setCaption("");
-        setTags("");
-        setTag("");
     }
 
     function handleTagRemove(e, indexRemove){
@@ -71,23 +68,34 @@ function PostAdd({toggleAdd, posts, setPosts}){
     return(
         <div>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="captionUpload">Caption</label>
+                <label className="font-cover text-3xl" htmlFor="captionUpload">Caption</label>
                 <br/>
-                <input type="text" name="captionUpload" id="captionUpload" value={caption} onChange={(e)=>setCaption(e.target.value)} required/>
+                <input className="border-black border-2 p-2 mb-4 font-quan w-3xs rounded-xs" type="text" name="captionUpload" 
+                    id="captionUpload" value={caption} onChange={(e)=>setCaption(e.target.value)} required placeholder="Enter post caption"
+                />
                 <br/>
-                <label htmlFor="imageUpload">Image</label>
+                <label className="font-cover text-3xl mb-4" htmlFor="imageUpload">Image</label>
                 <br/>
-                <input type="file" name="imageUpload" id="imageUpload" accept="image/*" onChange={handleFile} required/>
+                <input className="border-2 mt-2 border-black bg-lightBack-400 hover:cursor-pointer hover:bg-darkBack-500 p-3 font-quan mb-2" 
+                    type="file" name="imageUpload" id="imageUpload" accept="image/*" onChange={handleFile} required
+                />
                 <br/>
-                <label htmlFor="tagsUpload">Hashtags</label>
+                <label className="font-cover text-3xl mt-5 mb-2" htmlFor="tagsUpload">Hashtags</label>
                 <section>
-                    {tags.map((oneTag, index=0)=>{return <span key={index}>{oneTag}<button type="button" onClick={(e)=>handleTagRemove(e, index)}>X</button> </span>})}
+                    {tags.map((oneTag, index=0)=>{return <span key={index}>{oneTag}<button 
+                        className="hover:cursor-pointer mt-3 border-black border-2 p-2 mb-3 mx-2 bg-lightBack-400 hover:bg-red-500" 
+                        type="button" onClick={(e)=>handleTagRemove(e, index)}>X</button> </span>
+                    })}
                 </section>
                 <br/>
-                <input type="text" name="tagsUpload" id="tagsUpload" value={tag} onChange={(e)=>setTag(e.target.value)}/>
-                <button type="button" onClick={handleTagAdd}>Add tag</button>
+                <input className="border-black border-2 p-2 mb-1 font-quan w-3xs rounded-xs" type="text" name="tagsUpload" 
+                    id="tagsUpload" value={tag} onChange={(e)=>setTag(e.target.value)} placeholder="Enter tag for post"
+                />
+                <button className="border-2 mb-5 border-black p-2 hover:cursor-pointer bg-lightBack-400 hover:bg-darkBack-500" 
+                    type="button" onClick={handleTagAdd}>Add tag</button>
                 <br/>
-                <button type="submit">Submit</button>
+                <button className="border-black border-2 p-2 font-quan bg-lightBack-400 hover:bg-darkBack-500 hover:cursor-pointer mb-10"
+                    type="submit">Submit</button>
             </form>
         </div>
     )

@@ -71,7 +71,7 @@ function App(){
   return(
     <BrowserRouter>
       <Navbar/>
-      <main className="max-h-full">
+      <main className="min-h-full bg-darkBack-500 text-indigo-200">
         <Routes>
           <Route path="/" element={<Home setLogged={setLogged} loading={loading} setLoading={setLoading} errorMessage={errorMessage} setErrorMessage={setErrorMessage} />}/>
           <Route path="/signup" element={<Signup setLogged={setLogged}/>}/>

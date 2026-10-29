@@ -26,18 +26,25 @@ function ProfileEdit({toggleEdit}){
             <form>
                 <UsernameComp/>
                 <br/>
-                {/*<PronounsComp/>
-                <br/>*/}
-                <label>Pronouns</label>
+                <label htmlFor="customPronouns" className="font-cover text-2xl w-xl">Pronouns</label>
                 <br/>
-                <input type="text" value={pronoun} name="customPronouns" onChange={((e)=>setPronoun(e.target.value))}/>
-                <section>{pronouns.map((onePronoun, index=0)=>{return <span key={index}>{onePronoun}<button type="button" onClick={(e)=>handlePronounRemove(e, index)}>X</button> </span>})}</section>
-                <button type="button" onClick={handlePronounAdd}>Add Pronouns</button>
+                <input className="border-2 border-black p-2 mb-4 rounded-xs font-quan w-3xs" type="text" value={pronoun} 
+                    id="customPronouns" name="customPronouns" onChange={((e)=>setPronoun(e.target.value))}
+                    placeholder="Enter your custom pronouns"    
+                />
+                <section>
+                    {pronouns.map((onePronoun, index=0)=>{return <span key={index}>{onePronoun}
+                        <button className="hover:cursor-pointer border-black border-2 p-2 mb-3 mx-2 bg-lightBack-400 hover:bg-red-500" type="button" onClick={(e)=>handlePronounRemove(e, index)}>X</button> </span>})
+                    }
+                    </section>
+                <button className="border-2 mb-5 border-black p-2 hover:cursor-pointer bg-lightBack-400 hover:bg-darkBack-500" type="button" onClick={handlePronounAdd}>Add Pronouns</button>
                 <br/>
-                <label>Bio</label>
+                <label className="font-cover text-2xl" htmlFor="bioInput">Bio</label>
                 <br/>
-                <input type="text"/>
-                <button onClick={toggleEdit}>Submit</button>
+                <input className="border-black border-2 p-2 font-quan" name="bioInput" 
+                    id="bioInput" type="text" placeholder="Enter new bio"
+                />
+                <button className="border-black border-2 p-2 font-quan bg-lightBack-400 hover:bg-darkBack-500 hover:cursor-pointer" onClick={toggleEdit}>Submit</button>
             </form>
         </div>
     );

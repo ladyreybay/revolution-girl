@@ -43,9 +43,9 @@ function Home({setLogged, loading, setLoading, errorMessage, setErrorMessage}){
     }
 
     return(
-        <div className="flex flex-col items-center bg-emerald-300">
-            <h1 id="homeTitle" className="text-9xl">Revolution Girl!</h1>
-            <h2 id="homeSub" className="text-4xl">Punk ain&apos;t dead, it is community</h2>
+        <div className="flex flex-col items-center bg-darkBack-500">
+            <h1 id="homeTitle" className="text-9xl font-lac mt-10 mb-20">REVOLUTION GIRL!</h1>
+            <h2 id="homeSub" className="text-4xl mb-50 font-cover">Punk ain&apos;t dead, it is community</h2>
             <form onSubmit={handleSubmit} id="homeLogin" className="">
                 <UsernameComp changeId="loginUsername" username={username} setUsername={setUsername} />
                 <br/>
@@ -54,10 +54,10 @@ function Home({setLogged, loading, setLoading, errorMessage, setErrorMessage}){
                 <div>
                     {errorMessage&&<span id="errorField">{errorMessage}</span>}
                 </div>
-                <div className="flex flex-row place-items-center">
-                    <button type="submit" id="loginBut" className="hover:cursor-pointer border-2 border-black rounded-sm">Login</button>
+                <div className="flex flex-row place-items-center mb-10 place-content-between">
+                    <button type="submit" id="loginBut" className="border-black border-2 text-xl p-2 font-quan bg-lightBack-400 hover:bg-darkBack-500 hover:cursor-pointer">Login</button>
                     <Link to="/signup">
-                        <button id="signup" className="hover:cursor-pointer border-2 border-black rounded-sm ">Signup</button>
+                        <button id="signup" className="border-black border-2 p-2 text-xl font-quan bg-lightBack-400 hover:bg-darkBack-500 hover:cursor-pointer">Signup</button>
                     </Link>
                 </div>
             </form>

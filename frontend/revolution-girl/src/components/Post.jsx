@@ -10,6 +10,7 @@ function Post(){
     const [post, setPost] = useState({hashtags:["dsa","adsa"], comments:[{}]});
     const [comment, setComment] = useState("");
     const {postId} = useParams();
+    const [errorMessage, setErrorMessage] = useState("");
 
     function toggleEdit(){
         setPostEditShow(!postEditShow);
@@ -17,7 +18,6 @@ function Post(){
 
     async function getPost(){
         try{
-            console.log("Gettin post");
             setLoading(true);
             const res = await fetch("http://localhost:8080/api/getPost", {
                 method: "POST",
@@ -29,15 +29,14 @@ function Post(){
                 })
             });
             if(!res.ok){
-                console.log("post error");
                 throw new Error("Provided postId does not exist, please return to a safe page or find a valid post");
             }
             const dat = await res.json();
-            console.log("Post\n",dat);
             setPost(dat);
             setLoading(false);
         }catch(err){
             setLoading(false);
+            setErrorMessage(err.message);
         }
     }
 
@@ -45,12 +44,7 @@ function Post(){
         getPost();
     }, []);
 
-    useEffect(()=>{
-        console.log("gotten post\n",post);
-    }, [post]);
-
     function checkEditPermish(){
-        console.log(post.posterId==user._id, post.posterId, user._id);
         if(user.admin==true||post.posterId==user._id){
             return true;
         }else{

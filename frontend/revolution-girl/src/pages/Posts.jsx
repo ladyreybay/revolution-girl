@@ -60,7 +60,8 @@ function Posts({posts, setPosts}){
     return(
         <div className="p-3">
             <SearchBar search={search} setSearch={setSearch} setFeedOpt={setFeedOpt}/>
-            <div className="grid-cols-2 auto-rows-auto">
+            {errorMessage&&<p>{errorMessage}</p>}
+            <div className="grid grid-cols-2 grid-rows-auto place place-items-center">
                 <Feed posts={filtPosts} feedOpt={feedOpt}/>
             </div>
         </div>

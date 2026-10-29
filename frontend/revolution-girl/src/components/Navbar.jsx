@@ -13,9 +13,9 @@ function Navbar(){
         return(null);
     }else{
         return(
-            <nav className="p-2">
-                <Link to="/posts">
-                    Revolution Girl!
+            <nav className="p-2 font-lac bg-darkBack-500 text-indigo-200">
+                <Link to="/posts" className="font-lac">
+                    REVOLUTION GIRL!
                 </Link>
                 <Link to="/posts" className="hover:underline">Home</Link>
                 <Link to={`/friends/${userId}`} className="hover:underline">Friends</Link>

@@ -12,7 +12,7 @@ function FriendsCountList({user, userId}){
 
     return(
         <>
-            <Link to={`/friends/${userId.userId}`}>{getNumFriends()} Friends</Link>
+            <Link className="hover:underline" to={`/friends/${userId.userId}`}>{getNumFriends()} Friends</Link>
         </>
     );
 }

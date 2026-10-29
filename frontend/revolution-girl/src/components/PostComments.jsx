@@ -16,10 +16,6 @@ function PostComments({comments}){
         setPostComments([...comments]);
     }, []);
 
-    useEffect(()=>{
-        console.log("Post comments gotten:",comments, postComments);
-    }, [postComments]);
-
     let index = 0;
     return(
         <section>

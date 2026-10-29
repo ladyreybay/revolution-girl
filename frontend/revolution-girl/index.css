@@ -1,1 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&family=Lacquer&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import "tailwindcss";
+
+@theme{
+    --color-darkBack-500: #3A0842;
+    --color-lightBack-400: #391463;
+    --font-lac: "Lacquer", sans-serif;
+    --font-quan: "Quantico", sans-serif;
+    --font-cover: "Covered By Your Grace", sans-serif;
+}
+
+#root{
+    min-height: 100%;
+}
+
+body{
+    background-color: #3A0842;
+}

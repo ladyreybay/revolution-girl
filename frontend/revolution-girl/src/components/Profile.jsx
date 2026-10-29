@@ -14,6 +14,7 @@ function Profile({posts, setPosts}){
     const [username, setUsernmae] = useState("");
     const [viewProfile, setViewProfile] = useState({});
     const [viewProfilePosts, setViewProfilePosts] = useState([]);
+    const [errorMessage, setErrorMessage] = useState("");
 
     function toggleAdd(){
         if(user._id==userId.userId){
@@ -32,7 +33,6 @@ function Profile({posts, setPosts}){
         }
         let friendAr = user.friends;
         let friendsLen = friendAr.length;
-        console.log("Friend\n",friendAr, friendsLen);
         for(let i=0; i<friendsLen; i++){
             if(user.friends[i].friendId==userId.userId){
                 return true;
@@ -73,7 +73,7 @@ function Profile({posts, setPosts}){
                 setViewProfile(accDat);
                 setViewProfilePosts(postDat);
             }catch(err){
-                console.log(err.message);
+                
             }
         }
         loadProfile();
@@ -84,18 +84,16 @@ function Profile({posts, setPosts}){
     }
 
     useEffect(()=>{
-        console.log(viewProfilePosts);
-        console.log(viewProfile);
     },[viewProfilePosts, viewProfile])
 
     return(
         <div id="profileTopInfo">
             <section>
-                <button id="accountProfile" onClick={toggleEdit}>
+                <button className="hover:border-indigo-300 hover:border-3" id="accountProfile" onClick={toggleEdit}>
                     <img src="/profilePlace.png" id="accountProfile"/>
                 </button>
                 <br/>
-                {user._id==userId.userId&&<button onClick={toggleEdit}>Edit</button>}{editProfileShow&&<ProfileEdit toggleEdit={toggleEdit}/>}
+                {user._id==userId.userId&&<button className="border-black border-2 w-1/17 p-2 font-quan bg-lightBack-400 hover:bg-darkBack-500 hover:cursor-pointer" onClick={toggleEdit}>Edit</button>}{editProfileShow&&<ProfileEdit toggleEdit={toggleEdit}/>}
                 <div id="usernamePro">
                     <span id="profileUsername">{user.username}</span> <span id="profilePronouns">({user.pronouns.map((pronoun)=>{return <i>{pronoun} </i>})})</span>
                 </div>
@@ -116,9 +114,11 @@ function Profile({posts, setPosts}){
                         <img src="/addPostPlace.png"/>
                     </button>}{addPostShow&&<PostAdd posts={posts} setPosts={setPosts}/>}
                 </section>
-                <section>
-                    {isFriend()&&viewProfilePosts.map((post, index)=>{return <Link to={`/posts/${post._id}`}><img key={post._id+index} src={post.image?`${post.image}`:"/postPlace.png"}/></Link>})}
-                </section>
+                <section className="mt-10 flex flex-row flex-wrap place-content-around">
+                    {isFriend()&&viewProfilePosts.map((post, index)=>{return <Link key={post._id+Math.random(Math.random(1E9))} to={`/posts/${post._id}`}><img key={post._id+index} src={post.image?`${post.image}`:"/postPlace.png"} 
+                        className="max-w-3xs"
+                    /></Link>})}
+                </section>  
             </div>
         </div>
     );
